@@ -19,6 +19,20 @@ namespace inSession
                 options.UseSqlServer("Server=db15646.public.databaseasp.net; Database=db15646; User Id=db15646; Password=Fh4-5L+qK#i2; Encrypt=True; TrustServerCertificate=True; MultipleActiveResultSets=True;");
             });
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("MyPolicy", policyBuilder =>
+                {
+                    // This lambda allows any origin. The key difference is that
+                    // instead of AllowAnyOrigin(), we use SetIsOriginAllowed.
+                    policyBuilder
+                        .SetIsOriginAllowed(origin => true)
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials();
+                });
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -31,6 +45,7 @@ namespace inSession
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
+            app.UseCors("MyPolicy");
 
 
             app.MapControllers();
