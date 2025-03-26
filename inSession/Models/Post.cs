@@ -13,11 +13,11 @@ namespace inSession.Models
 
         [Required]
         public string Content { get; set; }
-
         public int UpVotes { get; set; }
-
         public int UserId { get; set; }
+        public DateTime CreatedAt { get; set; }
         public virtual User User { get; set; }
+        public List<string> Tags { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
     }
